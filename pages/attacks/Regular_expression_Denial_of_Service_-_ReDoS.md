@@ -3,7 +3,7 @@
 layout: col-sidebar
 title: Regular expression Denial of Service - ReDoS
 author: Adar Weidman 
-contributors: Ebing, Rsl81, Wichers, Bjoern Kimminich, kingthorin
+contributors: Ebing, Rsl81, Wichers, Bjoern Kimminich, kingthorin, pi3ch
 permalink: /attacks/Regular_expression_Denial_of_Service_-_ReDoS
 tags: attack, redos, Regular expression Denial of Service - ReDoS
 
@@ -18,14 +18,14 @@ Service](Denial_of_Service) attack, that exploits the fact
 that most Regular Expression implementations may reach extreme
 situations that cause them to work very slowly (exponentially related to
 input size). An attacker can then cause a program using a Regular
-Expression to enter these extreme situations and then hang for a very
+Expression (Regex) to enter these extreme situations and then hang for a very
 long time.
 
 ## Description
 
 ### The problematic Regex naïve algorithm
 
-The Regular Expression naïve algorithm builds a [Nondeterministic Finite
+The Regex naïve algorithm builds a [Nondeterministic Finite
 Automaton
 (NFA)](http://en.wikipedia.org/wiki/Nondeterministic_finite_state_machine),
 which is a finite state machine where for each pair of state and input
@@ -35,16 +35,23 @@ several possible next states, a deterministic algorithm is used. This
 algorithm tries one by one all the possible paths (if needed) until a
 match is found (or all the paths are tried and fail).
 
-For example, the Regex `^(a+)+$` is represented by the following
+For example, the Regex pattern or quantifier `^(a+)+$` is represented by the following
 NFA:
 
-![Nondeterministic Finite Automaton](../assets/images/attacks/NFA.png)
+![Nondeterministic Finite Automaton](../../assets/images/attacks/NFA.png)
 
 For the input `aaaaX` there are 16 possible paths in the above
 graph. But for `aaaaaaaaaaaaaaaaX` there are 65536 possible paths,
 and the number is double for each additional `a`. This is an extreme
 case where the naïve algorithm is problematic, because it must pass on
-many many paths, and then fail.
+many paths to find a **non-matching input**.
+
+The root-cause of the above example is in a Regex engine feature called **backtracking**.
+Simply, if the input (token) fails to match, the engine goes back to
+previous positions where it could take a different path.
+The engine tries this many times until it explores all possible paths.
+In the above example, this feature create a long running loop 
+because there were many paths to explore due to inefficient Regex pattern.
 
 Notice, that not all algorithms are naïve, and actually Regex algorithms
 can be written in an efficient way. Unfortunately, most Regex engines
@@ -55,24 +62,23 @@ be solved efficiently (see **Patterns for non-regular languages** in
 more details). So even if the Regex is not "expanded", a naïve algorithm
 is used.
 
-### Evil Regexes
+### Evil Regex
 
-A Regex is called "evil" if it can stuck on crafted input.
+A Regex pattern is called **Evil Regex** if it can get stuck on crafted input.
 
-**Evil Regex pattern contains**:
+**Evil Regex contains**:
 
 - Grouping with repetition
 - Inside the repeated group:
     - Repetition
     - Alternation with overlapping
 
-**Examples of Evil Patterns**:
+**Examples of Evil Regex**:
 
-- `(a+)+`
-- `([a-zA-Z]+)*`
-- `(a|aa)+`
-- `(a|a?)+`
-- `(.*a){x} for x \> 10`
+- `(a+)+$`
+- `([a-zA-Z]+)*$`
+- `(a|aa)+$`
+- `(a|a?)+$`
 
 All the above are susceptible to the input
 `aaaaaaaaaaaaaaaaaaaaaaaa!` (The minimum input length might change
@@ -90,7 +96,7 @@ Regex**, and make the system vulnerable.
 
 The Web is Regex-Based:
 
-![](../assets/images/attacks/RegexBasedWeb.png)
+![](../../assets/images/attacks/RegexBasedWeb.png)
 
 In every layer of the WEB there are Regular Expressions, that might
 contain an **Evil Regex**. An attacker can hang a WEB-browser (on a
@@ -140,17 +146,17 @@ The following example checks if the username is part of the password
 entered by the user.
 
 ```
-String userName = textBox1.Text;
-String password = textBox2.Text;
-Regex testPassword = new Regex(userName);
-Match match = testPassword.Match(password);
-if (match.Success)
+String userName = textBox1.Text;
+String password = textBox2.Text;
+Regex testPassword = new Regex(userName);
+Match match = testPassword.Match(password);
+if (match.Success)
 {
-    MessageBox.Show("Do not include name in password.");
+    MessageBox.Show("Do not include name in password.");
 }
 else
 {
-    MessageBox.Show("Good password.");
+    MessageBox.Show("Good password.");
 }
 ```
 
@@ -160,16 +166,16 @@ will hang.
 
 ## References
 
-- [Regular Expression Denial Of Service / Crosby&Wallach, Usenix Security 2003](http://www.cs.rice.edu/~scrosby/hash/slides/USENIX-RegexpWIP.2.ppt)
-- [Regular expression Denial of Service Revisited, Sep-2009](http://www.checkmarx.com/NewsDetails.aspx?id=23&cat=3)
+- [Regular Expression Denial Of Service / Crosby&Wallach, Usenix Security 2003](https://web.archive.org/web/20031120114522/https://www.cs.rice.edu/~scrosby/hash/slides/USENIX-RegexpWIP.2.ppt)
+- [Regular expression Denial of Service Revisited, Sep-2009](https://web.archive.org/web/20091007100653/http://www.checkmarx.com/Upload/Documents/PDF/Checkmarx_OWASP_IL_2009_ReDoS.pdf)
 - [RegExLib](http://regexlib.com/)
 - [ReDOS Attacks: From the Exploitation to the Prevention (in .NET)](https://dzone.com/articles/regular-expressions-denial)
-- [Tool for detecting ReDoS vulnerabilities.](http://www.cs.bham.ac.uk/~hxt/research/rxxr.shtml)
+- [Tool for detecting ReDoS vulnerabilities.](https://web.archive.org/web/20211027135828/https://www.cs.bham.ac.uk/~hxt/research/rxxr.shtml)
 - Examples of ReDoS in open source applications:
     - [ReDoS in DataVault](https://nvd.nist.gov/vuln/detail/CVE-2009-3277)
     - [ReDoS in EntLib](https://nvd.nist.gov/vuln/detail/CVE-2009-3275)
     - [ReDoS in NASD CORE.NET Terelik](https://nvd.nist.gov/vuln/detail/CVE-2009-3276)
     - [ReDoS in .NET Framework](http://blog.malerisch.net/2015/09/net-mvc-redos-denial-of-service-vulnerability-cve-2015-2526.html)
-    - [ReDoS in Javascript minimatch](https://nodesecurity.io/advisories/118)
+    - [ReDoS in Javascript minimatch](https://nvd.nist.gov/vuln/detail/CVE-2022-3517)
 
 [Category:Injection](https://owasp.org/www-community/Injection_Flaws)

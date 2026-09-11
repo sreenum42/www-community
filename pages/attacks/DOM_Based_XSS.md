@@ -45,7 +45,7 @@ in the query string, as the parameter “default”.
 
     <select><script>
 
-    document.write("<OPTION value=1>"+document.location.href.substring(document.location.href.indexOf("default=")+8)+"</OPTION>");
+    document.write("<OPTION value=1>"+decodeURIComponent(document.location.href.substring(document.location.href.indexOf("default=")+8))+"</OPTION>");
 
     document.write("<OPTION value=2>English</OPTION>");
 
@@ -72,16 +72,18 @@ the document.location object contains the string:
     http://www.some.site/page.html?default=<script>alert(document.cookie)</script>
 
 The original Javascript code in the page does not expect the default
-parameter to contain HTML markup, and as such it simply echoes it into
-the page (DOM) at runtime. The browser then renders the resulting page
-and executes the attacker’s script:
+parameter to contain HTML markup, and as such it simply decodes and echoes
+it into the page (DOM) at runtime. The browser then renders the resulting
+page and executes the attacker’s script:
 
     alert(document.cookie)
 
 Note that the HTTP response sent from the server does not contain the
 attacker’s payload. This payload manifests itself at the client-side
 script at runtime, when a flawed script accesses the DOM variable
-document.location and assumes it is not malicious.
+document.location and assumes it is not malicious. In addition, most
+browsers URL encode document.location by default which reduces the
+impact or possibility of many DOM XSS attacks.
 
 ### Advanced Techniques and Derivatives
 
@@ -147,17 +149,7 @@ DOM manipulation and DOM based XSS can be extended in \[3\].
 
 ### Testing Tools and Techniques
 
-Minded Security has been doing some significant research into DOM based
-XSS. They are working on two projects to help with DOM Based XSS:
-
-1\. The DOMinator Tool - A commercial tool based on the Firefox browser
-with modified Spidermonkey Javascript engine that helps testers identify
-and verify DOM based XSS flaws
-
-See: <https://dominator.mindedsecurity.com/>
-(https://github.com/wisec/DOMinator for the open source part)
-
-2\. The DOM XSS Wiki - The start of a Knowledgebase for defining sources
+1\. The DOM XSS Wiki - The start of a Knowledgebase for defining sources
 of attacker controlled inputs and sinks which could potentially
 introduce DOM Based XSS issues. Its very immature as of 11/17/2011.
 Please contribute to this wiki if you know of more dangerous sinks
@@ -165,7 +157,7 @@ and/or safe alternatives\!\!
 
 See: <http://code.google.com/p/domxsswiki/>
 
-3\. DOM Snitch - An experimental Chrome extension that enables
+2\. DOM Snitch - An experimental Chrome extension that enables
 developers and testers to identify insecure practices commonly found in
 client-side code. From Google.
 

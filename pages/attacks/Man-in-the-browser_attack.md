@@ -3,7 +3,7 @@
 layout: col-sidebar
 title: Man-in-the-browser attack
 author: 
-contributors: 
+contributors: kingthorin, meeque, Kunal Gupta
 permalink: /attacks/Man-in-the-browser_attack
 tags: attack, Man-in-the-browser attack
 auto-migrated: 1
@@ -14,14 +14,13 @@ auto-migrated: 1
 
 ## Description
 
-The Man-in-the-Browser attack is the same approach as [Man-in-the-middle
-attack](Man-in-the-middle_attack "wikilink"), but in this case a [Trojan
-Horse](Trojan_Horse "wikilink") is used to intercept and manipulate
-calls between the main application’s executable (ex: the browser) and
+The Man-in-the-Browser attack is conceptually related to the Manipulator-in-the-Middle
+attack; however, in this case a Trojan horse is used to intercept and manipulate
+calls between the main application’s executable (e.g. the browser) and
 its security mechanisms or libraries on-the-fly.
 
 The most common objective of this attack is to cause financial fraud by
-manipulating transactions of Internet Banking systems, even when other
+manipulating transactions of internet banking systems, even when other
 authentication factors are in use.
 
 A previously installed Trojan horse is used to act between the browser
@@ -29,9 +28,9 @@ and the browser’s security mechanism, sniffing or modifying transactions
 as they are formed on the browser, but still displaying back the user's
 intended transaction.
 
-Normally, the victim must be smart in order to notice a signal of such
-attack while they are accessing a web application like an internet banking
-account, even in presence of SSL channels, because all expected controls
+In practice, it is extremely difficult for users to detect such attacks
+while they are accessing a web application like an internet banking
+account, even in presence of TLS-secured channels, because all expected controls
 and security mechanisms are displayed and work normally.
 
 Points of effect:
@@ -43,19 +42,21 @@ Points of effect:
   - **API-Hooking** – this is the technique used by Man-in-the-Browser
     to perform its Man-in-the-Middle between the executable application
     (EXE) and its libraries (DLL).
-  - **Javascript** – By using a malicious Ajax worm, as described on
+  - **JavaScript** – By using a malicious Ajax worm, as described on
     [Ajax Sniffer - Proof of
-    Concept](http://myappsecurity.blogspot.com/2007/01/ajax-sniffer-prrof-of-concept.html)
+    Concept](https://myappsecurity.blogspot.com/2007/01/ajax-sniffer-prrof-of-concept.html)
 
 ## Risk Factors
 
-TBD
+  - Use of infected or untrusted endpoints
+  - Reliance on client-side integrity for transaction security
+  - Insufficient endpoint protection
 
 ## Examples
 
-### Manipulation thru DOM interface
+### Manipulation through DOM interface
 
-In order to perform this attack, an attacker may progress thru the
+In order to perform this attack, an attacker may progress through the
 following steps:
 
 1.  The Trojan infects the computer's software, either OS or
@@ -94,45 +95,11 @@ following steps:
 18. The user thinks that the original transaction was received by the
     server intact and authorized correctly.
 
-## Related [Threat Agents](Threat_Agents "wikilink")
-
-  - TBD
-
 ## Related [Attacks](https://owasp.org/www-community/attacks/)
 
-  - [Man-in-the-middle attack](Man-in-the-middle_attack "wikilink")
-  - [:Category: Client-side
-    attacks](:Category:_Client-side_attacks "wikilink")
-
-## Related [Vulnerabilities](https://owasp.org/www-community/vulnerabilities/)
-
-  - [:Category: Session Management
-    Vulnerability](:Category:_Session_Management_Vulnerability "wikilink")
-
-## Related [Controls](https://owasp.org/www-community/controls/)
-
-  - [:Category: Authentication](:Category:_Authentication "wikilink")
-  - [:Category:Input Validation](:Category:Input_Validation "wikilink")
-  - [HTML Entity Encoding](HTML_Entity_Encoding "wikilink")
-  - [:Category:Session
-    Management](:Category:Session_Management "wikilink")
+  - [Manipulator-in-the-middle attack](Manipulator-in-the-middle_attack)
 
 ## References
 
-  - <http://events.ccc.de/congress/2006/Fahrplan/attachments/1158-Subverting_Ajax.pdf>
+  - <https://events.ccc.de/congress/2006/Fahrplan/attachments/1158-Subverting_Ajax.pdf>
     - Stefano di Paola and Giorgio Fedon, Subverting Ajax, Dec, 2006.
-
-\[\[Category:FIXME|link not working
-
-  - <http://www.it-observer.com/pdf/dl/concepts_against_mitb_attacks.pdf->
-    Philipp Gühring - Concepts against Man-in-the-Browser Attacks, May,
-    2006.
-
-\]\]
-
-[Category:OWASP ASDR Project](Category:OWASP_ASDR_Project "wikilink")
-[need content here](Category:FIXME "wikilink") [need
-links](Category:FIXME "wikilink") [should we add this
-category?](Category:FIXME "wikilink")
-[Category:Attack](Category:Attack "wikilink") [need Attack
-subcategory](Category:FIXME "wikilink")

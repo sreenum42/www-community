@@ -1,18 +1,18 @@
 ---
 
-layout: full-width
-title: Google Season of Docs 2020
-tags: gsod, Google Season of Docs 2020
+layout: col-sidebar
+title: Google Season of Docs 2021
+tags: gsod, Google Season of Docs 2021
 permalink: /initiatives/gsod/current/
 
 ---
 
-# OWASP is applying to participate in Google Season of Docs (“GSoD”) 2020
+# OWASP is applying to participate in Google Season of Docs (“GSoD”) 2021
 
 Open source software is changing the world and creating the future.
 
 Want to help shape it? We’re looking for students to join us in making
-2020 the best Season of Docs yet!
+2021 the best Season of Docs yet!
 
 ## Overview
 

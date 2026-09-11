@@ -2,13 +2,13 @@
 
 title: OWASP Chapters All Day 
 layout: col-sidebar
-dates: June 6-7
+dates: "June 6-7, 2020"
 permalink: /social/chapters_all_day/
 tags: chaptersAllDay2020
 
 ---
 
-<img src="/www-community/pages/social/chapters_all_day/assets/images/Logo-Chapters_All_Day-Transparent.jpg" style="width: 250px; height: 250px;" alt="Logo-OWASP Chapters All Day" />
+<img src="assets/images/Logo-Chapters_All_Day-Transparent.jpg" style="width: 250px; height: 250px;" alt="Logo-OWASP Chapters All Day" />
 
 {{ page.title }}
 {{ page.dates }} - 12:00 noon (UTC) Saturday - 12:30 p.m. (UTC) Sunday 
@@ -16,8 +16,8 @@ tags: chaptersAllDay2020
 ## Important Links
 
 
-* [Presentation Schedule](/www-community/pages/social/chapters_all_day/schedule/)
-  * [Presentation Abstracts and Speaker Biographies](/www-community/pages/social/chapters_all_day/speakers/)
+* [Presentation Schedule]({{ site.baseurl }}/pages/social/chapters_all_day/schedule/)
+  * [Presentation Abstracts and Speaker Biographies]({{ site.baseurl }}/pages/social/chapters_all_day/speakers/)
 * [YouTube Channel](https://www.youtube.com/channel/UCJNkJT42qFOBdnD8pCpelrw/videos?view=2&flow=grid&live_view=502){:target="_blank"}{:rel="noopener noreferrer"}
 * [#owasp-chapters-all-day](https://owasp.slack.com/archives/C0119CL6AN4) Channel on OWASP Slack - For interactive discussion before, during, and after the event
 
@@ -31,7 +31,7 @@ The entire event will be live-streamed on the **[OWASP Chapters All Day](https:/
 
 ## Organising Committee
 
-* Oscar Bravo Lara (United Kingdom)
+* Oscar Bravo Lara (Chile)
 * Oscar Carlo Orellana Artigas (Chile)
 * John DiLeo - Chapter Leader (New Zealand)
 * Takaharu Ogasa - Chapter Leader (Sendai, Japan)

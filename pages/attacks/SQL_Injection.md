@@ -1,12 +1,10 @@
 ---
-
 layout: col-sidebar
 title: SQL Injection
-author: 
-contributors: kingthorin
+author:
+contributors: kingthorin, zbraiterman
 permalink: /attacks/SQL_Injection
 tags: attack, SQL Injection
-
 ---
 
 {% include writers.html %}
@@ -21,14 +19,14 @@ administration operations on the database (such as shutdown the DBMS),
 recover the content of a given file present on the DBMS file system and
 in some cases issue commands to the operating system. SQL injection
 attacks are a type of injection attack, in which SQL commands
-are injected into data-plane input in order to effect the execution of
+are injected into data-plane input in order to affect the execution of
 predefined SQL commands.
 
 ## Threat Modeling
 
-- SQL injection attacks allow attackers to spoof identity, tamper with  existing data, cause repudiation issues such as voiding transactions  or changing balances, allow the complete disclosure of all data on  the system, destroy the data or make it otherwise unavailable, and  become administrators of the database server.
-- SQL Injection is very common with PHP and ASP applications due to  the prevalence of older functional interfaces. Due to the nature of  programmatic interfaces available, J2EE and ASP.NET applications are  less likely to have easily exploited SQL injections.
-- The severity of SQL Injection attacks is limited by the attacker’s  skill and imagination, and to a lesser extent, defense in depth  countermeasures, such as low privilege connections to the database  server and so on. In general, consider SQL Injection a high impact  severity.
+- SQL injection attacks allow attackers to spoof identity, tamper with existing data, cause repudiation issues such as voiding transactions or changing balances, allow the complete disclosure of all data on the system, destroy the data or make it otherwise unavailable, or become administrators of the database server.
+- SQL Injection is very common with PHP and ASP applications due to the prevalence of older functional interfaces. Due to the nature of programmatic interfaces available, J2EE and ASP.NET applications are less likely to have easily exploited SQL injections.
+- The severity of SQL Injection attacks is limited by the attacker’s skill and imagination, and to a lesser extent, defense in depth countermeasures, such as low privilege connections to the database server and so on. In general, consider SQL Injection a high impact severity.
 
 ## Related Security Activities
 
@@ -51,17 +49,17 @@ See the OWASP Article on [using SQL Injection to bypass a WAF](SQL_Injection_Byp
 
 ## Description
 
-SQL injection errors occur when:
+SQL injection attack occurs when:
 
-1. Data enters a program from an untrusted source.
-2. The data used to dynamically construct a SQL query
+1. An unintended data enters a program from an untrusted source.
+2. The data is used to dynamically construct a SQL query
 
 The main consequences are:
 
-- **Confidentiality**: Since SQL databases generally hold sensitive  data, loss of confidentiality is a frequent problem with SQL Injection vulnerabilities.
-- **Authentication**: If poor SQL commands are used to check user  names and passwords, it may be possible to connect to a system as another user with no previous knowledge of the password.
-- **Authorization**: If authorization information is held in a SQL  database, it may be possible to change this information through the successful exploitation of a SQL  Injection vulnerability.
-- **Integrity**: Just as it may be possible to read sensitive  information, it is also possible to make changes or even delete this  information with a SQL Injection attack.
+- **Confidentiality**: Since SQL databases generally hold sensitive data, loss of confidentiality is a frequent problem with SQL Injection vulnerabilities.
+- **Authentication**: If poor SQL commands are used to check user names and passwords, it may be possible to connect to a system as another user with no previous knowledge of the password.
+- **Authorization**: If authorization information is held in a SQL database, it may be possible to change this information through the successful exploitation of a SQL Injection vulnerability.
+- **Integrity**: Just as it may be possible to read sensitive information, it is also possible to make changes or even delete this information with a SQL Injection attack.
 
 ## Risk Factors
 
@@ -92,7 +90,7 @@ If one provided: `Firstname: evil'ex` and `Lastname: Newman`
 
 the query string becomes:
 
-`select id, firstname, lastname from authors where forename = 'evil'ex' and surname ='newman'`
+`select id, firstname, lastname from authors where firstname = 'evil'ex' and lastname ='newman'`
 
 which the database attempts to run as:
 
@@ -104,7 +102,7 @@ A safe version of the above SQL statement could be coded in Java as:
 String firstname = req.getParameter("firstname");
 String lastname = req.getParameter("lastname");
 // FIXME: do your own validation to detect attacks
-String query = "SELECT id, firstname, lastname FROM authors WHERE forename = ? and surname = ?";
+String query = "SELECT id, firstname, lastname FROM authors WHERE firstname = ? and lastname = ?";
 PreparedStatement pstmt = connection.prepareStatement( query );
 pstmt.setString( 1, firstname );
 pstmt.setString( 2, lastname );
@@ -124,7 +122,7 @@ currently-authenticated user.
 ```
 ...
 string userName = ctx.getAuthenticatedUserName();
-string query = "SELECT * FROM items WHERE owner = "'"
+string query = "SELECT * FROM items WHERE owner = '"
                 + userName + "' AND itemname = '"
                 + ItemName.Text + "'";
 sda = new SqlDataAdapter(query, conn);
@@ -249,7 +247,7 @@ application secure against SQL injection attacks.
 
 ## Related [Attacks](https://owasp.org/www-community/attacks/)
 
-- [SQL Injection Bypassing WAF](https://www.owasp.org/index.php/SQL_Injection_Bypassing_WAF)
+- [SQL Injection Bypassing WAF](https://owasp.org/www-community/attacks/SQL_Injection_Bypassing_WAF)
 - [Blind SQL Injection](Blind_SQL_Injection)
 - [Code Injection](Code_Injection)
 - [Double Encoding](../Double_Encoding)
@@ -257,9 +255,7 @@ application secure against SQL injection attacks.
 
 ## References
 
-- [SQL Injection Knowledge Base](http://www.websec.ca/kb/sql_injection) - A reference guide for MySQL, MSSQL and Oracle SQL Injection attacks.
-- [GreenSQL Open Source SQL Injection Filter](http://www.greensql.net/) - An Open Source database firewall used to protect databases from SQL injection attacks.
-- [An Introduction to SQL Injection Attacks for Oracle Developers](https://web.archive.org/web/20151005235207/http://www.net-security.org/dl/articles/IntegrigyIntrotoSQLInjectionAttacks.pdf)
-  - This also includes recommended defenses.
+- [SQL Injection Knowledge Base](https://book.hacktricks.xyz/pentesting-web/sql-injection) - A reference guide for MySQL, MSSQL and Oracle SQL Injection attacks.
+- [GreenSQL Open Source SQL Injection Filter](https://web.archive.org/web/20160305000000/http://www.greensql.net/) - An Open Source database firewall used to protect databases from SQL injection attacks.
 
 [Category:Injection](https://owasp.org/www-community/Injection_Flaws)

@@ -2,14 +2,20 @@
 
 layout: col-sidebar
 title: Password Plaintext Storage
-author: 
-contributors: 
+author:
+contributors:
 permalink: /vulnerabilities/Password_Plaintext_Storage
 tags: vulnerability, Password Plaintext Storage
 
 ---
 
 {% include writers.html %}
+
+## NVD Categorization
+
+> [CWE-256: Plaintext Storage of a Password](https://cwe.mitre.org/data/definitions/256.html): Storing a password in plaintext may result in a system compromise.
+
+> [CWE-312: Cleartext Storage of Sensitive Information](https://cwe.mitre.org/data/definitions/312.html): The application stores sensitive information in cleartext within a resource that might be accessible to another control sphere.
 
 ## Description
 
@@ -20,6 +26,15 @@ in an application's properties or configuration file. A programmer can
 attempt to remedy the password management problem by obscuring the
 password with an encoding function, such as base 64 encoding, but this
 effort does not adequately protect the password.
+
+> ⚠️ **Note**
+
+> Similarly, using fast cryptographic hash functions or lightly modified constructions
+> (for example, chaining SHA-256 and SHA-512) does not adequately protect stored passwords
+> against rainbow table or precomputation attacks.
+> Such approaches remain computationally cheap and can be recomputed by attackers.
+> OWASP recommends using dedicated, memory-hard password hashing functions such as
+> bcrypt, scrypt, or Argon2.
 
 Storing a plaintext password in a configuration file allows anyone who
 can read the file access to the password-protected resource. Developers

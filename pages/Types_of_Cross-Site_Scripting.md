@@ -24,7 +24,17 @@ of XSS](http://www.webappsec.org/projects/articles/071105.shtml), which
 Amit coined [DOM Based XSS](attacks/DOM_Based_XSS). These 3 types of
 XSS are defined as follows:
 
-### [Stored XSS](attacks/xss/#stored-xss-attacks) (AKA Persistent or Type I)
+### [Reflected XSS](attacks/xss/#reflected-xss-attacks) (AKA Non-Persistent or Type I)
+
+Reflected XSS occurs when user input is immediately returned by a web
+application in an error message, search result, or any other response
+that includes some or all of the input provided by the user as part of
+the request, without that data being made safe to render in the browser,
+and without permanently storing the user provided data. In some cases,
+the user provided data may never even leave the browser (see DOM Based
+XSS below).
+
+### [Stored XSS](attacks/xss/#stored-xss-attacks) (AKA Persistent or Type II)
 
 Stored XSS generally occurs when user input is stored on the target
 server, such as in a database, in a message forum, visitor log, comment
@@ -35,27 +45,9 @@ can envision the attack payload being permanently stored in the victim’s
 browser, such as an HTML5 database, and never being sent to the server
 at all.
 
-### [Reflected XSS](attacks/xss/#reflected-xss-attacks) (AKA Non-Persistent or Type II)
-
-Reflected XSS occurs when user input is immediately returned by a web
-application in an error message, search result, or any other response
-that includes some or all of the input provided by the user as part of
-the request, without that data being made safe to render in the browser,
-and without permanently storing the user provided data. In some cases,
-the user provided data may never even leave the browser (see DOM Based
-XSS next).
-
 ### [DOM Based XSS](attacks/DOM_Based_XSS) (AKA Type-0)
 
-As defined by Amit Klein, who published the first article about this
-issue \[1\], DOM Based XSS is a form of XSS where the entire tainted data
-flow from source to sink takes place in the browser, i.e., the source of
-the data is in the DOM, the sink is also in the DOM, and the data flow
-never leaves the browser. For example, the source (where malicious data
-is read) could be the URL of the page (e.g., document.location.href), or
-it could be an element of the HTML, and the sink is a sensitive method
-call that causes the execution of the malicious data (e.g.,
-document.write)."
+DOM Based XSS (or as it is called in some texts, “type-0 XSS”) is an XSS attack wherein the attack payload is executed as a result of modifying the DOM “environment” in the victim’s browser used by the original client side script, so that the client side code runs in an “unexpected” manner. That is, the page itself (the HTTP response that is) does not change, but the client side code contained in the page executes differently due to the malicious modifications that have occurred in the DOM environment.
 
 # Types of Cross-Site Scripting
 
@@ -101,7 +93,7 @@ this new terminology results in a simple, clean, 2 x 2 matrix with
 Client & Server XSS on one axis, and Stored and Reflected XSS on the
 other axis as depicted in Dave Witchers’ DOM Based XSS talk \[2\]:
 
-![Chart Server XSS vs Client XSS](assets/images/Server-XSS_vs_Client-XSS_Chart.png)
+![Chart Server XSS vs Client XSS](../assets/images/Server-XSS_vs_Client-XSS_Chart.png)
 
 ## Recommended Server XSS Defenses
 

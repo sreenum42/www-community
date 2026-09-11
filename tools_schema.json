@@ -1,12 +1,14 @@
 {
-	"definitions": {},
-	"$schema": "http://json-schema.org/draft-07/schema#", 
-	"title": "Root", 
+	"definitions": {
+	},
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "Root",
 	"type": "array",
-	"default": [],
-	"items":{
-		"$id": "#root/items", 
-		"title": "Items", 
+	"default": [
+	],
+	"items": {
+		"$id": "#root/items",
+		"title": "Items",
 		"type": "object",
 		"required": [
 			"title",
@@ -19,19 +21,20 @@
 		],
 		"properties": {
 			"title": {
-				"$id": "#root/items/title", 
-				"title": "Title", 
-				"type": "string"
+				"$id": "#root/items/title",
+				"title": "Title",
+				"type": "string",
+				"pattern": "^\\S.*"
 			},
 			"url": {
-				"$id": "#root/items/url", 
-				"title": "Url", 
+				"$id": "#root/items/url",
+				"title": "Url",
 				"type": "string",
-                "format": "uri"
+				"format": "uri"
 			},
 			"owner": {
-				"$id": "#root/items/owner", 
-				"title": "Owner", 
+				"$id": "#root/items/owner",
+				"title": "Owner",
 				"oneOf": [
 					{
 						"type": "null"
@@ -42,19 +45,20 @@
 				]
 			},
 			"license": {
-				"$id": "#root/items/license", 
-				"title": "License", 
+				"$id": "#root/items/license",
+				"title": "License",
 				"type": "string",
-                "enum": [
+				"enum": [
 					"Free",
 					"Commercial",
+					"Commercial or Free",
 					"Open Source",
 					"Open Source or Free"
 				]
 			},
 			"platforms": {
-				"$id": "#root/items/platforms", 
-				"title": "Platforms", 
+				"$id": "#root/items/platforms",
+				"title": "Platforms",
 				"oneOf": [
 					{
 						"type": "null"
@@ -65,8 +69,8 @@
 				]
 			},
 			"note": {
-				"$id": "#root/items/note", 
-				"title": "Note", 
+				"$id": "#root/items/note",
+				"title": "Note",
 				"oneOf": [
 					{
 						"type": "null"
@@ -77,15 +81,20 @@
 				]
 			},
 			"type": {
-				"$id": "#root/items/type", 
-				"title": "Type", 
-				"type": "string",
-                "enum": [
-					"DAST",
-					"SAST"
-				]
+				"$id": "#root/items/type",
+				"title": "Type",
+				"type": "array",
+				"minItems": 1,
+				"uniqueItems": true,
+				"items": {
+					"type": "string",
+					"enum": [
+						"SAST",
+						"DAST",
+						"SCA"
+					]
+				}
 			}
 		}
 	}
-
 }

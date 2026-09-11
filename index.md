@@ -6,7 +6,74 @@ tags: community
 
 ---
 
-<!-- rebuild 5 -->
+<!-- rebuild 6 -->
+
+[Community Content](#community-content) &bull; [Contributing](#contributing)
+
+## Community Content
+
+Click the triangle (or other control/character) to the left of the following headings to access an expanded list of community content pages.
+
+<details>
+<summary>Controls</summary>
+
+{% assign control_pages = site.pages | sort: 'title' | where_exp: "page", "page.path contains '/controls/'" | where_exp: "page", "page.name != 'index.md'" | where_exp: "page", "page.name != 'info.md'"%}
+<ul>
+{% for page in control_pages %}
+       <li><a href='{{ site.url }}{{ site.baseurl }}{{ page.url }}'>{{ page.title | default: page.name }}</a>{% if page.author %} by {{ page.author }}{% endif %}</li>
+{% endfor %}
+</ul>
+
+</details>
+
+<details>
+<summary>Attacks</summary>
+
+{% assign attack_pages = site.pages | sort: 'title' | where_exp: "page", "page.path contains '/attacks/'" | where_exp: "page", "page.name != 'index.md'" | where_exp: "page", "page.name != 'info.md'"%}
+<ul>
+{% for page in attack_pages %}
+       <li><a href='{{ site.url }}{{ site.baseurl }}{{ page.url }}'>{{ page.title | default: page.name }}</a>{% if page.author %} by {{ page.author }}{% endif %}</li>
+{% endfor %}
+</ul>
+
+</details>
+
+<details>
+<summary>Vulnerabilities</summary>
+
+{% assign vuln_pages = site.pages | sort: 'title' | where_exp: "page", "page.path contains '/vulnerabilities/'" | where_exp: "page", "page.name != 'index.md'" | where_exp: "page", "page.name != 'info.md'"%}
+<ul>
+{% for page in vuln_pages %}
+       <li><a href='{{ site.url }}{{ site.baseurl }}{{ page.url }}'>{{ page.title | default: page.name }}</a>{% if page.author %} by {{ page.author }}{% endif %}</li>
+{% endfor %}
+</ul>
+
+</details>
+
+<details>
+<summary>Other</summary>
+
+{% assign pages = site.pages | sort: 'title' | where_exp: "page", "page.path contains 'pages/'" | where_exp: "page", "page.name != 'index.md'" | where_exp: "page", "page.name != 'info.md'"%}
+{% assign already_displayed = control_pages | concat: attack_pages | concat: vuln_pages %}
+<ul>
+{% for page in pages %}
+  {% assign display = true %}
+  {% for checkpage in already_displayed %}
+    {% if checkpage.url == page.url %}
+      {% assign display = false %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  {% if display %}
+       <li><a href='{{ site.url }}{{ site.baseurl }}{{ page.url }}'>{{ page.title | default: page.name }}</a>{% if page.author %} by {{ page.author }}{% endif %}</li>
+  {% endif %}
+{% endfor %}
+</ul>
+
+</details>
+
+## Contributing
 
 OWASP Community Pages are a place where OWASP can accept community contributions for security-related content.
 To contribute, go to the [repository for this site](https://github.com/OWASP/www-community).
@@ -33,66 +100,3 @@ tags: [attack, XSS, etc]
 {% endraw %}
 
 **Please** ensure your content contribution is based on original work/thought and not plagiarised. Also, please ensure that contributions are vendor/product neutral.
-
-## Content Listing
-
-Client the triangle (or other control/character) to the left of the following headings to access an expanded list of community content pages.
-
-<details>
-<summary>Controls</summary>
-
-{% assign control_pages = site.pages | sort: 'title' | where_exp: "page", "page.path contains '/controls/'" | where_exp: "page", "page.name != 'index.md'" | where_exp: "page", "page.name != 'info.md'"%}
-<ul>
-{% for page in control_pages %}
-       <li><a href='{{ site.url }}{{ site.baseurl }}{{ page.url }}'>{{ page.title }}</a>{% if page.author %} by {{ page.author }}{% endif %}</li>
-{% endfor %}
-</ul>
-
-</details>
-
-<details>
-<summary>Attacks</summary>
-
-{% assign attack_pages = site.pages | sort: 'title' | where_exp: "page", "page.path contains '/attacks/'" | where_exp: "page", "page.name != 'index.md'" | where_exp: "page", "page.name != 'info.md'"%}
-<ul>
-{% for page in attack_pages %}
-       <li><a href='{{ site.url }}{{ site.baseurl }}{{ page.url }}'>{{ page.title }}</a>{% if page.author %} by {{ page.author }}{% endif %}</li>
-{% endfor %}
-</ul>
-
-</details>
-
-<details>
-<summary>Vulnerabilities</summary>
-
-{% assign vuln_pages = site.pages | sort: 'title' | where_exp: "page", "page.path contains '/vulnerabilities/'" | where_exp: "page", "page.name != 'index.md'" | where_exp: "page", "page.name != 'info.md'"%}
-<ul>
-{% for page in vuln_pages %}
-       <li><a href='{{ site.url }}{{ site.baseurl }}{{ page.url }}'>{{ page.title }}</a>{% if page.author %} by {{ page.author }}{% endif %}</li>
-{% endfor %}
-</ul>
-
-</details>
-
-<details>
-<summary>Other</summary>
-
-{% assign pages = site.pages | sort: 'title' | where_exp: "page", "page.path contains 'pages/'" | where_exp: "page", "page.name != 'index.md'" | where_exp: "page", "page.name != 'info.md'"%}
-{% assign already_displayed = control_pages | concat: attack_pages | concat: vuln_pages %}
-<ul>
-{% for page in pages %}
-  {% assign display = true %}
-  {% for checkpage in already_displayed %}
-    {% if checkpage.url == page.url %}
-      {% assign display = false %}
-      {% break %}
-    {% endif %}
-  {% endfor %}
-
-  {% if display %}
-       <li><a href='{{ site.url }}{{ site.baseurl }}{{ page.url }}'>{{ page.title }}</a>{% if page.author %} by {{ page.author }}{% endif %}</li>
-  {% endif %}
-{% endfor %}
-</ul>
-
-</details>

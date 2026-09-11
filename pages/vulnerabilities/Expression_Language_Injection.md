@@ -2,14 +2,18 @@
 
 layout: col-sidebar
 title: Expression Language Injection
-author: 
-contributors: 
+author:
+contributors:
 permalink: /vulnerabilities/Expression_Language_Injection
 tags: vulnerability, Expression Language Injection
 
 ---
 
 {% include writers.html %}
+
+## NVD Categorization
+
+> [CWE-917: Improper Neutralization of Special Elements used in an Expression Language Statement ('Expression Language Injection')](https://cwe.mitre.org/data/definitions/917.html): The software constructs all or part of an expression language (EL) statement in a Java Server Page (JSP) using externally-influenced input from an upstream component, but it does not neutralize or incorrectly neutralizes special elements that could modify the intended EL statement before it is executed.
 
 ## Description
 
@@ -44,11 +48,11 @@ A common pattern of passing URL parameters to the message tag is:
 Controller.java
 ```
 @RequestMapping(value="/")
-String index() {
-  if ( hasErrors() ) {
-    return "redirect:/error?msg=error.generic";
-  } else {
-    return "index";`
+String index() {
+  if ( hasErrors() ) {
+    return "redirect:/error?msg=error.generic";
+  } else {
+    return "index";`
   }
 }
 ```
@@ -68,14 +72,14 @@ A URL request to the above code of the form:
 Will result in the string literal "INJECTION" being passed to the message tag. The application should respond with an exception like:
 
 ```
-No message found under code 'INJECTION' for locale 'en_US'
+No message found under code 'INJECTION' for locale 'en_US'
 ```
 
 Accordingly, the attacker could submit methods within the EL like:
 
 ````
 ?msg=${pageContext.request.getSession().setAttribute("admin",true)}
-``` 
+```
 
 If the container provided EL interpreter does not support static class methods (`java.lang.Runtime.getCurrentRuntime().exec()`), an attacker can use a URLClassLoader to load remote code.
 
@@ -110,7 +114,7 @@ In the case of Spring Framework, disable the double resolution functionality in 
 
 ```
 <context-param>
-  <description>Spring Expression Language Support</description>
+  <description>Spring Expression Language Support</description>
   <param-name>springJspExpressionSupport</param-name>
   <param-value>false</param-value>
 </context-param>

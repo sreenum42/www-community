@@ -9,7 +9,32 @@ tags: risk rating methodology
 
 ---
 
+# DISCLAIMER 
+
+Over the years there has be lots of [debate]({{ site.baseurl }}/misc/rrm_debate) about the OWASP Risk Rating Methodology and the weighting of Threat Actor Skill levels.
+There are other more mature, popular, or well established Risk Rating Methodologies that can be followed:
+
+- [NIST 800-30 - Guide for Conducting Risk Assessments](https://csrc.nist.gov/publications/detail/sp/800-30/rev-1/final)
+- [Government of Canada - Harmonized TRA Methodology](https://cyber.gc.ca/en/guidance/harmonized-tra-methodology-tra-1)
+- Mozilla resources:
+    - [Risk Assessment Summary](https://infosec.mozilla.org/guidelines/assessing_security_risk)
+    - [Rapid Risk Assessment (RRA)](https://infosec.mozilla.org/guidelines/risk/rapid_risk_assessment.html)
+
+Alternatively you may with the review information about Threat Modeling, as that may be a better fit for your app or organization:
+
+- [OWASP Threat Modeling Project](https://owasp.org/www-project-threat-modeling/)
+- [OWASP pytm](https://owasp.org/www-project-pytm/) Pythonic framework for threat modeling
+- [OWASP Threat Dragon](https://owasp.org/www-project-threat-dragon/) threat modeling tool
+
+Lastly you might want to refer to the [references](#references) below.
+
+**Note**: Edits/Pull Requests to the content below that deal with changes to Threat Actor Skill will not be accepted.
+
+----
+
 {% include writers.html %}
+
+# Introduction
 
 Discovering vulnerabilities is important, but being able to estimate the associated risk to the business 
 is just as important. Early in the life cycle, one may identify security concerns in the architecture or 
@@ -85,7 +110,7 @@ associated with it. These numbers will be used later to estimate the overall lik
 The first set of factors are related to the threat agent involved. The goal here is to estimate 
 the likelihood of a successful attack by this group of threat agents. Use the worst-case threat agent.
 
-  - **Skill Level** - How technically skilled is this group of threat agents? No technical skills (1), some technical skills (3), advanced computer user (5), network and programming skills (6), security penetration skills (9), 
+  - **Skill Level** - How technically skilled is this group of threat agents? No technical skills (1), some technical skills (3), advanced computer user (5), network and programming skills (6), security penetration skills (9) 
 
   - **Motive** - How motivated is this group of threat agents to find and exploit this vulnerability? Low or no reward (1), possible reward (4), high reward (9)
 
@@ -129,7 +154,7 @@ the magnitude of the impact on the system if the vulnerability were to be exploi
 
   - **Loss of Confidentiality** - How much data could be disclosed and how sensitive is it? Minimal non-sensitive data disclosed (2), minimal critical data disclosed (6), extensive non-sensitive data disclosed (6), extensive critical data disclosed (7), all data disclosed (9)
 
-  - **Loss of Integrity** = How much data could be corrupted and how damaged is it? Minimal slightly corrupt data (1), minimal seriously corrupt data (3), extensive slightly corrupt data (5), extensive seriously corrupt data (7), all data totally corrupt (9)
+  - **Loss of Integrity** - How much data could be corrupted and how damaged is it? Minimal slightly corrupt data (1), minimal seriously corrupt data (3), extensive slightly corrupt data (5), extensive seriously corrupt data (7), all data totally corrupt (9)
 
   - **Loss of Availability** - How much service could be lost and how vital is it? Minimal secondary services interrupted (1), minimal primary services interrupted (5), extensive secondary services interrupted (5), extensive primary services interrupted (7), all services completely lost (9)
 
@@ -369,7 +394,6 @@ tune the model by matching it against risk ratings the business agrees are accur
 * [Industry standard vulnerability severity and risk rankings (CVSS)](https://www.first.org/cvss/)
 * [Threat Modeling Web Applications](https://docs.microsoft.com/en-us/previous-versions/msp-n-p/ff648006(v=pandp.10))
 * [Threat Modeling](Threat_Modeling)
-* [Practical Threat Analysis](http://www.ptatechnologies.com)
 * [A Platform for Risk Analysis of Security Critical Systems](https://sourceforge.net/projects/coras/)
 * [Model-driven Development and Analysis of Secure Information Systems](http://heim.ifi.uio.no/~ketils/securis/)
 * [Value Driven Security Threat Modeling Based on Attack Path Analysis](https://ieeexplore.ieee.org/document/4076949)

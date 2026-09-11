@@ -2,8 +2,8 @@
 
 layout: col-sidebar
 title: Buffer Overflow
-author: 
-contributors: 
+author:
+contributors:
 permalink: /vulnerabilities/Buffer_Overflow
 tags: vulnerability, Buffer Overflow
 
@@ -32,6 +32,10 @@ Vulnerabilities.
 ## Overview
 
 A buffer overflow condition exists when a program attempts to put more data in a buffer than it can hold or when a program attempts to put data in a memory area past a buffer. In this case, a buffer is a sequential section of memory allocated to contain anything from a character string to an array of integers. Writing outside the bounds of a block of allocated memory can corrupt data, crash the program, or cause the execution of malicious code.
+
+## NVD Categorization
+
+> [CWE-788: Access of Memory Location After End of Buffer](https://cwe.mitre.org/data/definitions/788.html): This typically occurs when a pointer or its index is incremented to a position after the buffer; or when pointer arithmetic results in a position after the buffer.
 
 ## Description
 
@@ -221,3 +225,11 @@ void getUserInfo(char *username, struct _USER_INFO_2 info){
 - Design: Use an abstraction library to abstract away risky APIs. Not a complete solution.
 - Pre-design through Build: Compiler-based canary mechanisms such as StackGuard, ProPolice and the Microsoft Visual Studio / GS flag. Unless this provides automatic bounds checking, it is not a complete solution.
 - Operational: Use OS-level preventative functionality. Not a complete solution.
+
+### Example 6 – Real-world analogy
+
+A buffer overflow is like trying to pour water into a glass that's already full. Imagine you have a small cup that can hold only 8 ounces of water, but you try to pour 12 ounces into it. The extra 4 ounces will spill over onto the table, making a mess and potentially damaging whatever is nearby.
+
+In computer programs, buffers are like these cups - they have a fixed amount of space to store data. When a program receives more data than the buffer can hold, the excess data "spills over" into adjacent memory areas. This overflow can corrupt other data, crash the program, or allow attackers to execute malicious code by overwriting critical parts of the program's memory.
+
+For example, in a C program that stores a username in a fixed-size 20-character buffer without checking the length of the input, an attacker could supply a 100-character username. The extra 80 characters would overflow into adjacent memory, potentially corrupting data or allowing the attacker to alter the program's control flow.

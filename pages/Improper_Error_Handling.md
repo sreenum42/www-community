@@ -3,9 +3,8 @@
 title: Improper Error Handling
 layout: col-sidebar
 author:
-contributors:
+contributors: Jeremy Ferragamo, Wichers, Jim Bird, kingthorin
 tags:
-auto-migrated: 1
 permalink: /Improper_Error_Handling
 
 ---
@@ -62,8 +61,7 @@ are susceptible to error handling problems.
 
 ## Examples and References
 
-  - [OWASP Testing Guide - generating error
-    codes]/www-project-web-security-testing-guide)
+- [OWASP Testing Guide](/www-project-web-security-testing-guide/)
 
 ## How to Determine If You Are Vulnerable
 
@@ -99,8 +97,3 @@ Note that the vast majority of web application attacks are never
 detected because so few sites have the capability to detect them.
 Therefore, the prevalence of web application security attacks is likely
 to be seriously underestimated.
-
-The OWASP Filters project is producing reusable components in several
-languages to help prevent error codes leaking into user’s web pages by
-filtering pages when they are constructed dynamically by the
-application.

@@ -12,9 +12,9 @@ permalink: /OWASP_Secure_Software_Contract_Annex
 
 **SECURE SOFTWARE DEVELOPMENT CONTRACT ANNEX**
 
-` WARNING: THIS DOCUMENT SHOULD BE CONSIDERED GUIDANCE ONLY.`
-` OWASP STRONGLY RECOMMENDS THAT YOU CONSULT A QUALIFIED`
-` ATTORNEY TO HELP YOU NEGOTIATE A SOFTWARE CONTRACT.`
+` WARNING: THIS DOCUMENT SHOULD BE CONSIDERED GUIDANCE ONLY.`
+` OWASP STRONGLY RECOMMENDS THAT YOU CONSULT A QUALIFIED`
+` ATTORNEY TO HELP YOU NEGOTIATE A SOFTWARE CONTRACT.`
 
 ## INTRODUCTION
 
@@ -27,11 +27,11 @@ what has actually been agreed to. We believe that clearly articulating
 these terms is the best way to ensure that both parties can make
 informed decisions about how to proceed.
 
-`"The security of commercial software will improve when the market demands better security.`
-`At a minimum, every software request for proposal should ask vendors to detail how they`
-`test their products for security vulnerabilities. This step will start convincing vendors`
-`of off-the-shelf software and outsourced developers that enterprises value security."`
-`      -- As John Pescatore, research director with Gartner`
+`"The security of commercial software will improve when the market demands better security.`
+`At a minimum, every software request for proposal should ask vendors to detail how they`
+`test their products for security vulnerabilities. This step will start convincing vendors`
+`of off-the-shelf software and outsourced developers that enterprises value security."`
+`      -- As John Pescatore, research director with Gartner`
 
 We urge Clients and Developers to use this document as a framework for
 discussing expectations and negotiating responsibilities. This Annex is
@@ -41,7 +41,7 @@ and Developer.
 
 ## ABOUT THE PROJECT
 
-This document was created by The Open Web Application Security Project
+This document was created by The Open Worldwide Application Security Project
 (OWASP) Foundation, a not-for-profit charitable organization dedicated
 to creating free and open tools and documentation related to secure
 software. To facilitate easy use in private contracting, this document

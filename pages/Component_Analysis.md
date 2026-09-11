@@ -32,7 +32,7 @@ Any component that has the potential to adversely impact cyber supply-chain risk
 
 Having an accurate inventory of all third-party and open source components is pivotal for risk identification. Without 
 such knowledge, other factors of Component Analysis become impractical to determine with high confidence. Use of 
-dependency management solutions and/or [Software Bill-of-Materials (SBOM)](#software-bill-of-materials-sbom) can aid in
+dependency management solutions and/or [Software Bill of Materials (SBOM)](#software-bill-of-materials-sbom) can aid in
 inventory creation.
 
 #### Component Age
@@ -107,12 +107,13 @@ components over time can be expected. This is especially true for teams with tim
 Components in many software ecosystems are published and distributed to central repositories. Repositories have known 
 threats. Some of the threats against public repositories include:
 
-  - Typosquatting - naming a component in such as way as to take advantage of common misspelling
-  - Organization/Group abuse - pretending to be a public person or entity and abusing the perceived trust
+  - Typosquatting - naming a component in such as way as to take advantage of common misspelling.
+  - Organization/Group abuse - pretending to be a public person or entity and abusing the perceived trust. This includes
+    dependency confusion and namespace confusion.
   - Malware through transfer - leveraging weak or absent code-signing requirements to spread malware through the 
-    transfer of an open source project from one maintainer to another
+    transfer of an open source project from one maintainer to another.
   - Cross Build Injection (XBI) - Abusing dependency resolution schemes and weak infrastructure controls to inject 
-    malicious components in place of safe ones
+    malicious components in place of safe ones.
 
 Public repositories that have code-signing and verification requirements have some level of trust, whereas public 
 repositories without basic countermeasures do not. For no-trust or low-trust repositories, utilizing private 
@@ -120,16 +121,29 @@ repositories may be advantageous. Private repositories refer to repositories whe
 that organizations install and control, or a commercially available service. *Golden repositories* containing vetted or 
 permitted components are a common use-case for private repositories. Private repository services focusing on security 
 may additionally provide anti-malware analysis and static source code analysis requirements prior to acceptance in the
-repository. When leveraging private repositories, it is important to have traceability to the components' repository of 
-origin.
+repository. When leveraging private repositories, it is important to have traceability to the components' provenance.
+
+#### Provenance
+
+A component's provenance refers to the traceability of all authorship, build, release, packaging, and distribution 
+across the entire supply chain. In physical supply chains this is referred to as the *chain of custody*. Provenance may 
+include individual and community authorship of software components, manufacturers, suppliers, software repositories, 
+and country of origin. For high assurance applications, provenance plays an important role in determining Foreign 
+Ownership, Control, or Influence (FOCI).
 
 #### Pedigree
 
-A component's pedigree (sometimes referred to as 'provenance') refers to the traceability of all changes (i.e. commits), 
-releases, modifications, packaging, and distribution across the entire supply chain. In physical supply chains this is 
-referred to as the *chain of custody*. Obtaining a components pedigree may involve a mixture of automation across 
-multiple systems and suppliers, along with legal and verifiable supporting documentation. Component pedigree includes 
-all supporting documentation of lineage and the attributes which make a component unique.
+Data which describes the lineage for which software has been created or altered. Pedigree includes the ancestors, 
+descendants, and variants which describe component lineage from any viewpoint and the commits, patches, and diffs which 
+make a component unique. Maintaining accurate pedigree information is especially important with open source components whos 
+source code is readily available, modifiable, and redistributable. 
+
+#### Formulation
+
+Formulation describes how components were built often including build system invocation and properties, SDK and compiler
+versions, compiler flags, and a comprehensive list of parallel and sequential steps that were taken to build, test, and 
+deliver a component. Formulation and pedigree are complimentary concepts and are often combined and referred simply
+as pedigree.
 
 #### License
 
@@ -149,6 +163,11 @@ that relies on them. Components may additionally have specific runtime or enviro
 details not known or prescribed by the component. Component Analysis can aggregate the risk of all direct, transitive, 
 runtime, and environmental dependencies providing a holistic view of inherited risk.
 
+From a risk mitigation standpoint, only direct dependencies can be changed in some cases. For example, a `pom.xml` file
+declares only on direct dependencies, while lock files, such as `package-lock.json` may be more flexible. 
+Any changes to transitive dependencies can potentially break the code that depends on it, and therefore, it would be 
+most impactful to focus on identifying the direct dependency fix. 
+
 #### Project Health
 
 There are many datapoints to consider when evaluating the health of an open source project.
@@ -163,24 +182,23 @@ There are many datapoints to consider when evaluating the health of an open sour
     root-cause patterns may signify a projects ability to protect the community from future (and similar) issues. 
     This activity may be a factor in risk evaluation.
 
-## Software Bill-of-Materials (SBOM)
+#### External Services
+
+Applications or their direct or transitive components may rely on external services for functionality. Common examples 
+include convenience libraries around common web services such as mapping, stock quotes, or weather, but may also include
+autogenerated software components built from API specifications such as TUF or OpenAPI. External services should be 
+included in the overall inventory of components.
+
+## Software Bill of Materials (SBOM)
 
 Multiple efforts between government and industry are attempting to define *Software Transparency*. Some of these efforts 
 will lead to increased compliance or regulatory requirements. Software Transparency is often achieved through the 
-publishing of bill-of-materials (BOM). A BOM is synonymous to the list of ingredients in a recipe. Both are an
+publishing of software bill of materials. An SBOM is synonymous to the list of ingredients in a recipe. Both are an
 implementation of transparency.
 
-Some Software Transparency efforts are focusing on Software Bill-of-Materials (SBOM) while others are more inclusive of 
-all supply chain components. The [U.S. Food and Drug Administration](https://www.fda.gov/) (FDA) defines Cyber
-Bill-of-Materials (CBOM) as:
-
-> a list that includes but is not limited to commercial, open source, and off-the-shelf software and hardware 
-> components that are or could become susceptible to vulnerabilities.
-
-There are multiple SBOM standards including [CycloneDX](https://cyclonedx.org/), [SPDX](https://spdx.org/), and
-[SWID](https://www.iso.org/standard/65666.html), each having their own strengths and use-cases they were designed to 
-solve. Evaluating SBOM standards to determine which are applicable to an organizations requirements should be part of 
-an overall C-SCRM strategy.
+There are multiple SBOM standards including OWASP [CycloneDX](https://cyclonedx.org/) and [SPDX](https://spdx.org/), each 
+having their own strengths and use-cases they were designed to solve. Evaluating SBOM standards to determine which are 
+applicable to an organizations requirements should be part of an overall C-SCRM strategy.
 
 ## Component Identification
 
@@ -189,6 +207,10 @@ fragmentation makes uniquely identifying and representing components difficult w
 respective ecosystems. Centralized databases such as the [CPE Product Dictionary](https://nvd.nist.gov/products/cpe) 
 maintained by [NIST](https://www.nist.gov/) adds additional fragmentation as the CPE vendor and product names often do 
 not reflect reality.
+
+[SWID](https://www.iso.org/standard/65666.html) tags are an alternative approach to component identity. They have 
+historically been used to describe commercial software for the purpose of license entitlements and ITOM discovery within
+a CMDB system. Software manufactures can create their own SWID tags whenever new versions are released.
 
 Generally, a component will have a name and version. Components may optionally have a higher-level grouping identifier, 
 commonly referred to as a groupId, organization, or vendor. When referencing components in a C-SCRM framework it is 
@@ -210,6 +232,15 @@ For example:
     pkg:pypi/django@1.11.1
     pkg:rpm/fedora/curl@7.50.3-1.fc25?arch=i386&distro=fedora-25
 ```
+
+## Software Verification
+
+Multiple standards exist for the verification of software components including: 
+
+* [OWASP Software Component Verification Standard (SCVS)](https://owasp.org/scvs) 
+* [Supply-chain Levels for Software Artifacts (SLSA)](https://slsa.dev/)
+
+Both standards aim to measure and improve the assurance of the software supply chain.
 
 ## Open Source Policy
 
@@ -235,7 +266,8 @@ and legal teams an opportunity to create solutions for healthy open source usage
   - Prohibit the use of end-of-life (EOL) components
   - Prohibit the use of components with known vulnerabilities. Update components that are exploitable with high to 
     moderate risk first.
-  - Reduce the attack surface by excluding unnecessary direct and transitive dependencies
+  - Reduce the attack surface by excluding unnecessary direct and transitive dependencies. Focus on providing resolution
+    recommendations on direct dependencies to make it actionalbe for developers.
   - Reduce the number of suppliers and use the highest quality components from those suppliers
   - Standardize on a single component for each component function
   - Establish a maximum level of acceptable risk for public repositories. Utilize private repositories in lieu of 
@@ -256,71 +288,119 @@ and legal teams an opportunity to create solutions for healthy open source usage
 
 | Name | Owner | Licence | Platforms |
 | ---- | ----- | ------- |---------- |
-| [GitHub SCA] | GitHub | Freemium | SaaS |
+| [Aikido Security] | Aikido Security | Commercial / Freemium | Cross Platform / SaaS |
+| [Arnica] | Arnica | Commercial / Freemium | Cross Platform / SaaS |
 | [Black Duck Hub] | Synopsys | Commercial | Cross Platform |
+| [Bytesafe] | Bytesafe | Freemium | SaaS |
+| [Bytesafe Dependency Checker] | Bytesafe | Free | SaaS |
 | [CAST Highlight] | CAST Software | Commercial | SaaS |
 | [Clarity] | Insignary | Commercial | Cross Platform / SaaS |
 | [ClearlyDefined] | Open Source Initiative | Open Source | SaaS |
+| [CloudDefense.AI] | CloudDefense.AI | Commercial / Freemium | Cross Platform / SaaS |
+| [CodeSentry] | GrammaTech | Commercial | Cross Platform / SaaS |
+| [Corgea] | Corgea |  / Freemium | Cross Platform / SaaS |
+| [CxSCA] | Checkmarx | Commercial | SaaS |
 | [Debricked] | Debricked | Commercial/Freemium | SaaS |
 | [DejaCode] | nexB | Commercial | SaaS |
+| [Dependabot] | Dependabot | Commercial / Freemium | SaaS |
 | [Dependency-Check] | OWASP | Open Source | Cross Platform |
 | [Dependency-Track] | OWASP | Open Source | Cross Platform |
-| [Dependabot] | Dependabot | Commercial / Freemium | SaaS |
+| [Dependency Track SaaS] | YourSky.blue | Commercial | SaaS |
 | [DepShield] | Sonatype | Open Source | Cross Platform / SaaS |
 | [DotNET Retire] | Retire.NET Project | Open Source | Cross Platform |
+| [Endor Labs] | Endor Labs | Commercial | SaaS |
 | [FlexNet Code Insight] | Flexera Commercial	| Cross Platform |
+| [Fluid Attack's Scanner] | Fluid Attacks | MPL 2.0. | SaaS |
 | [FOSSA] | FOSSA | Commercial / Freemium | SaaS |
 | [FOSSology] | Linux Foundation | Open Source | Cross Platform |
+| [GitHub SCA] | GitHub | Freemium | SaaS |
 | [Grafeas] | Grafeas | Open Source | Cross Platform |
 | [Greenkeeper] | Greenkeeper | Open Source | SaaS |
-| [OSS Review Toolkit] | HERE | Open Source | Cross Platform |
 | [Ion Channel SA] | Ion Channel | Commercial | SaaS |
+| [Kusari] | Kusari | Freemium | SaaS |
 | [Libraries.io] | Tidelift | Open Source | SaaS |
 | [MergeBase] | MergeBase | Commercial | SaaS |
-| [NPM Audit] | NPM | Open Source | SaaS |
-| [OSS Index] | Sonatype | Free / Open Source | SaaS |
-| [PHP Security Checker] | SensioLabs | Open Source | SaaS |
-| [Renovate] | Key Location | Open Source | SaaS |
-| [Snyk] | Snyk | Commercial / Freemium | SaaS |
-| [SourceClear] | Veracode | Commercial | Cross Platform / SaaS |
 | [Nexus IQ] | Sonatype | Commercial | Cross Platform |
+| [NPM Audit] | NPM | Open Source | SaaS |
 | [Open Source Lifecycle Management] | WhiteSource Software | Commercial | Cross Platform / SaaS |
-| [Retire.js] | RetireJS Project | Open Source | Cross Platform |
-| [VulnDB] | Risk Based Security | Commercial	| SaaS |
+| [OSS Index] | Sonatype | Free / Open Source | SaaS |
+| [OSS Review Toolkit] | HERE | Open Source | Cross Platform |
 | [Patton] | OWASP | Open Source | Cross Platform |
+| [PHP Security Checker] | SensioLabs | Open Source | SaaS |
+| [Plexicus] | Plexicus | Commercial / Freemium | SaaS |
+| [Prisma Cloud] | Palo Alto Networks | Commercial | Cross Platform / SaaS |
+| [Protean Labs] | Protean Labs | Commercial / Freemium | SaaS |
+| [Renovate] | Key Location | Open Source | SaaS |
+| [Retire.js] | RetireJS Project | Open Source | Cross Platform |
+| [SBOM Observer] | Bytesafe  | Commercial | SaaS |
+| [Scantist SCA] | Scantist | Freemium | Cross Platform / SaaS |
+| [Snyk] | Snyk | Commercial / Freemium | SaaS |
+| [Software Health Indicator] | YourSky.blue | Commercial / Freemium | SaaS |
+| [SOOS] | SOOS | Commercial / Freemium | SaaS |
+| [Veracode SCA] | Veracode | Commercial | Cross Platform / SaaS |
+| [Vigiles] | Timesys | Commercial / Freemium | SaaS |
+| [Vigilant Ops InSight] | Vigilant Ops | Commercial | Cross Platform / SaaS |
+| [Vulert] | Vulert | Commercial / Freemium | Cross Platform / SaaS |
+| [VulnDB] | Risk Based Security | Commercial	| SaaS |
+| [Xray] | JFrog | Commercial | Cross Platform |
+| [ZeroPath] | ZeroPath | Commercial / Freemium | Cross Platform / SaaS |
 
-[GitHub SCA]: https://docs.github.com/en/github/visualizing-repository-data-with-graphs/listing-the-packages-that-a-repository-depends-on/
+[Aikido Security]: https://aikido.dev
+[Arnica]: https://arnica.io/
+[Bytesafe]: https://bytesafe.dev/
+[Bytesafe Dependency Checker]: https://bytesafe.dev/dependency-checker/javascript/
 [Black Duck Hub]: https://www.blackducksoftware.com/
 [CAST Highlight]: https://www.castsoftware.com/SCA/
 [Clarity]: https://www.insignary.com/
 [ClearlyDefined]: https://clearlydefined.io/
+[CloudDefense.AI]: https://www.clouddefense.ai/
+[CodeSentry]: https://www.grammatech.com/codesentry-sca
+[Corgea]: https://corgea.com/
+[CxSCA]: https://www.checkmarx.com/products/software-composition-analysis/
 [Debricked]: https://debricked.com/
 [DejaCode]: https://www.nexb.com/
+[Dependabot]: https://dependabot.com/
 [Dependency-Check]: https://owasp.org/www-project-dependency-check/
 [Dependency-Track]: https://owasp.org/www-project-dependency-track/
-[Dependabot]: https://dependabot.com/
+[Dependency Track SaaS]: https://yoursky.blue/products/dependency-track-saas
 [DepShield]: https://depshield.github.io/
 [DotNET Retire]: https://github.com/RetireNet/dotnet-retire
+[Endor Labs]: https://endorlabs.com
 [FlexNet Code Insight]: https://www.flexera.com/products/software-composition-analysis/flexnet-code-insight.html
+[Fluid Attack's Scanner]: https://docs.fluidattacks.com/machine/scanner
 [FOSSA]: https://fossa.com/
 [FOSSology]: https://www.fossology.org/
+[GitHub SCA]: https://docs.github.com/en/github/visualizing-repository-data-with-graphs/listing-the-packages-that-a-repository-depends-on/
 [Grafeas]: https://grafeas.io/
 [Greenkeeper]: https://greenkeeper.io/
 [OSS Review Toolkit]: https://github.com/heremaps/oss-review-toolkit
 [Ion Channel SA]: https://ionchannel.io/
+[Kusari]: https://kusari.dev
 [Libraries.io]: https://libraries.io/
 [MergeBase]: http://mergebase.com/
-[NPM Audit]: https://www.npmjs.com/
-[OSS Index]: https://ossindex.sonatype.org/
-[PHP Security Checker]: https://github.com/sensiolabs/security-checker
-[Renovate]: https://renovatebot.com/
-[Snyk]: https://snyk.io/
-[SourceClear]: https://www.sourceclear.com/
 [Nexus IQ]: https://www.sonatype.com/
+[NPM Audit]: https://www.npmjs.com/
 [Open Source Lifecycle Management]: https://www.whitesourcesoftware.com/
-[Retire.js]: https://retirejs.github.io/retire.js/
-[VulnDB]: https://vulndb.cyberriskanalytics.com/
+[OSS Index]: https://ossindex.sonatype.org/
 [Patton]: https://owasp.org/www-project-patton/
+[PHP Security Checker]: https://github.com/sensiolabs/security-checker
+[Plexicus]:https://www.plexicus.ai/aspm-application-security-posture-management/
+[Prisma Cloud]: https://www.paloaltonetworks.com/prisma/cloud
+[Protean Labs]: https://protean-labs.io/
+[Renovate]: https://renovatebot.com/
+[Retire.js]: https://retirejs.github.io/retire.js/
+[SBOM Observer]: https://sbom.observer/
+[Scantist SCA]: https://scantist.com/
+[Snyk]: https://snyk.io/
+[Software Health Indicator]: https://software-health-indicator.com/
+[SOOS]: https://soos.io/
+[Veracode SCA]: https://www.veracode.com/products/software-composition-analysis
+[Vigiles]: https://www.timesys.com/security/vigiles-vulnerability-management-patch-monitoring/
+[Vigilant Ops InSight]: https://vigilant-ops.com/
+[Vulert]: https://vulert.com/
+[VulnDB]: https://vulndb.cyberriskanalytics.com/
+[Xray]: https://jfrog.com/xray/
+[ZeroPath]: https://zeropath.com
 
 
 ## References
@@ -348,4 +428,4 @@ and legal teams an opportunity to create solutions for healthy open source usage
   - Managing Security Risks Inherent in the Use of Third-party Components (SAFECode)  
     - <https://safecode.org/wp-content/uploads/2017/05/SAFECode_TPC_Whitepaper.pdf>
   - Deliver Uncompromised (MITRE)  
-    - <https://www.mitre.org/sites/default/files/publications/pr-18-2417-deliver-uncompromised-MITRE-study-8AUG2018.pdf>
+    - <https://www.mitre.org/sites/default/files/publications/pr-18-2417-deliver-uncompromised-MITRE-study-26AUG2019.pdf>
